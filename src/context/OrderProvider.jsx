@@ -27,7 +27,6 @@ const OrderProvider = ({ children }) => {
         })
     }
 
-
     const value = {
         setOrder,
         order,

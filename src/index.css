@@ -70,3 +70,29 @@ body::-webkit-scrollbar {
         border-radius: 12px;
         border: 1px solid rgba(209, 213, 219, 0.3);
     }  
+
+
+    /* Custom Swiper Navigation Arrows */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #000; /* Arrow color */
+    background-color: rgba(255, 255, 255, 0.8); /* Background color */
+    border-radius: 50%; /* Circular shape */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow */
+    transition: background-color 0.3s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background-color: rgba(255, 255, 255, 1); /* Solid background on hover */
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 20px; /* Arrow size */
+}

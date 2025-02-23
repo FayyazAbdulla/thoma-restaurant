@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import swal from 'sweetalert2';
 import { useDelivery } from '../../context/DeliveryProvider';
-import useAuth from '../../hooks/useFetch';
+import useAuth from '../../hooks/useAuth';
 import TextField from '../Form/TextField';
 
 const DeliveryForm = () => {
     const { user } = useAuth() || {}; // Add a fallback in case useAuth returns undefined
     const [change, setChange] = useState({
-        country: '',
-        roadNo: '',
-        flatno: '',
-        name: user?.displayName || '' // Use optional chaining and provide a fallback
+        name: user?.displayName || '', // Use optional chaining and provide a fallback
+        phone: '',
+        email: user?.email || '', // Use optional chaining and provide a fallback
     });
     const { setInput, setDisabled } = useDelivery();
 
@@ -27,12 +26,19 @@ const DeliveryForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setInput({
-            country: change.country,
-            roadNo: change.roadNo,
-            flatno: change.flatno,
-            name: change.name
+            name: change.name,
+            phone: change.phone,
+            email: change.email,
         });
-        swal("Information Updated!", "Your shipping details updated successfully!", "success");
+
+        // Correct SweetAlert2 usage
+        swal.fire({
+            title: "Information Updated!",
+            text: "Your contact details updated successfully!",
+            icon: "success",
+            confirmButtonText: "OK"
+        });
+
         setDisabled(false);
     };
 
@@ -43,33 +49,25 @@ const DeliveryForm = () => {
                 <div className="flex flex-col space-y-3">
                     <TextField
                         type="text"
-                        placeholder="Country and District"
-                        name="country"
-                        value={change.country}
-                        onChange={handleChange}
-                        required
-                    />
-                    <TextField
-                        type="text"
-                        placeholder="Road Name and Road No"
-                        name="roadNo"
-                        value={change.roadNo}
-                        onChange={handleChange}
-                        required
-                    />
-                    <TextField
-                        type="text"
-                        placeholder="Flat, suite or floor"
-                        name="flatno"
-                        value={change.flatno}
-                        onChange={handleChange}
-                        required
-                    />
-                    <TextField
-                        type="text"
-                        placeholder="Delivery to"
+                        placeholder="Full Name"
                         name="name"
                         value={change.name}
+                        onChange={handleChange}
+                        required
+                    />
+                    <TextField
+                        type="tel"
+                        placeholder="Phone Number"
+                        name="phone"
+                        value={change.phone}
+                        onChange={handleChange}
+                        required
+                    />
+                    <TextField
+                        type="email"
+                        placeholder="Email Address"
+                        name="email"
+                        value={change.email}
                         onChange={handleChange}
                         required
                     />
