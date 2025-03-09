@@ -94,6 +94,13 @@ const Navbar = () => {
                             >
                                 Sign Up
                             </button>
+
+                            <button
+                                className="bg-primary px-6 py-3 text-white poppins rounded-full ring-red-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105"
+                                onClick={() => navigate("/View_Order")}
+                            >
+                                Admin (View Order) - for Temp Use
+                            </button>
                         </div>
                     )}
                 </div>
