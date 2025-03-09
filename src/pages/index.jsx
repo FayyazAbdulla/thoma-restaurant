@@ -8,10 +8,7 @@ import Combo from "../components/home/Combo";
 import TakeawaySteps from "../components/home/TakeawaySteps";
 import FAQ from "../components/home/FAQ";
 
-
 function index() {
-
-
   return (
     <>
       <Banner />

@@ -19,216 +19,150 @@ const db = getFirestore(app);
 // Sample food data
 const sampleFoods = [
     {
-        title: "Pancakes",
-        description: "Fluffy pancakes with maple syrup.",
-        price: 8.99,
-        foodType: "Breakfast",
-        image: "https://example.com/pancakes.jpg"
+      "id": 1,
+      "title": "Eggs Benedict",
+      "description": "A classic breakfast dish with poached eggs, ham, and hollandaise sauce on an English muffin.",
+      "price": 1200,
+      "image": "/assets/Breakfast/breakfast1.png",
+      "type": "Breakfast"
     },
     {
-        title: "Avocado Toast",
-        description: "Toasted bread with mashed avocado and spices.",
-        price: 7.50,
-        foodType: "Breakfast",
-        image: "https://example.com/avocado-toast.jpg"
+      "id": 2,
+      "title": "Breakfast Sandwich",
+      "description": "A hearty sandwich filled with eggs, cheese, and your choice of meat, perfect for a quick breakfast.",
+      "price": 950,
+      "image": "/assets/Breakfast/breakfast2.png",
+      "type": "Breakfast"
     },
     {
-        title: "Eggs Benedict",
-        description: "Poached eggs on English muffins with hollandaise sauce.",
-        price: 9.99,
-        foodType: "Breakfast",
-        image: "https://example.com/eggs-benedict.jpg"
+      "id": 3,
+      "title": "Baked Chicken",
+      "description": "Juicy and tender baked chicken, seasoned to perfection and served with a side of vegetables.",
+      "price": 1800,
+      "image": "/assets/Breakfast/breakfast3.png",
+      "type": "Breakfast"
     },
     {
-        title: "French Toast",
-        description: "Thick slices of bread soaked in eggs and milk, then fried.",
-        price: 8.50,
-        foodType: "Breakfast",
-        image: "https://example.com/french-toast.jpg"
+      "id": 4,
+      "title": "Bagel and Cream Cheese",
+      "description": "A fresh bagel topped with creamy cheese, a simple and satisfying breakfast option.",
+      "price": 850,
+      "image": "/assets/Breakfast/breakfast4.png",
+      "type": "Breakfast"
     },
     {
-        title: "Omelette",
-        description: "Fluffy omelette with cheese, tomatoes, and herbs.",
-        price: 7.99,
-        foodType: "Breakfast",
-        image: "https://example.com/omelette.jpg"
+      "id": 5,
+      "title": "Fried Egg Toast Brunch",
+      "description": "A delicious combination of fried eggs and toast, perfect for a leisurely brunch.",
+      "price": 700,
+      "image": "/assets/Breakfast/breakfast5.png",
+      "type": "Breakfast"
     },
     {
-        title: "Caesar Salad",
-        description: "Fresh romaine lettuce with croutons and Caesar dressing.",
-        price: 6.99,
-        foodType: "Lunch",
-        image: "https://example.com/caesar-salad.jpg"
+      "id": 6,
+      "title": "Toast Croissant Fried Egg",
+      "description": "A buttery croissant served with a fried egg, a delightful twist on a classic breakfast.",
+      "price": 1100,
+      "image": "/assets/Breakfast/breakfast6.png",
+      "type": "Breakfast"
     },
     {
-        title: "Grilled Chicken Sandwich",
-        description: "Grilled chicken breast with lettuce, tomato, and mayo.",
-        price: 10.99,
-        foodType: "Lunch",
-        image: "https://example.com/grilled-chicken-sandwich.jpg"
+      "id": 7,
+      "title": "Beef Steak",
+      "description": "A succulent beef steak, grilled to your liking and served with a side of mashed potatoes.",
+      "price": 2800,
+      "image": "/assets/Lunch/lunch1.png",
+      "type": "Lunch"
     },
     {
-        title: "Margherita Pizza",
-        description: "Classic pizza with tomato sauce, mozzarella, and basil.",
-        price: 12.99,
-        foodType: "Lunch",
-        image: "https://example.com/margherita-pizza.jpg"
+      "id": 8,
+      "title": "Honey with Peppers",
+      "description": "A sweet and spicy dish featuring honey-glazed peppers, perfect for a light lunch.",
+      "price": 1200,
+      "image": "/assets/Lunch/lunch2.png",
+      "type": "Lunch"
     },
     {
-        title: "Beef Burger",
-        description: "Juicy beef patty with cheese, lettuce, and pickles.",
-        price: 11.50,
-        foodType: "Lunch",
-        image: "https://example.com/beef-burger.jpg"
+      "id": 9,
+      "title": "Tarragon Rubbed Salmon",
+      "description": "Fresh salmon rubbed with tarragon and grilled to perfection, served with a side of greens.",
+      "price": 2600,
+      "image": "/assets/Lunch/lunch3.png",
+      "type": "Lunch"
     },
     {
-        title: "Vegetable Stir Fry",
-        description: "Assorted vegetables stir-fried in a savory sauce.",
-        price: 9.99,
-        foodType: "Lunch",
-        image: "https://example.com/vegetable-stir-fry.jpg"
+      "id": 10,
+      "title": "Indian Lunch",
+      "description": "A flavorful Indian meal with a variety of spices, served with rice and naan bread.",
+      "price": 1800,
+      "image": "/assets/Lunch/lunch4.png",
+      "type": "Lunch"
     },
     {
-        title: "Spaghetti Bolognese",
-        description: "Spaghetti with a rich meat and tomato sauce.",
-        price: 13.99,
-        foodType: "Dinner",
-        image: "https://example.com/spaghetti-bolognese.jpg"
+      "id": 11,
+      "title": "Fried Chicken Bento",
+      "description": "A bento box filled with crispy fried chicken, rice, and a selection of vegetables.",
+      "price": 2000,
+      "image": "/assets/Lunch/lunch5.png",
+      "type": "Lunch"
     },
     {
-        title: "Grilled Salmon",
-        description: "Grilled salmon fillet with a lemon butter sauce.",
-        price: 15.99,
-        foodType: "Dinner",
-        image: "https://example.com/grilled-salmon.jpg"
+      "id": 12,
+      "title": "Healthy Meal Plan",
+      "description": "A balanced meal plan designed to keep you healthy, featuring a variety of nutritious foods.",
+      "price": 5000,
+      "image": "/assets/Lunch/lunch6.png",
+      "type": "Lunch"
     },
     {
-        title: "Steak",
-        description: "Juicy steak cooked to perfection with mashed potatoes.",
-        price: 18.99,
-        foodType: "Dinner",
-        image: "https://example.com/steak.jpg"
+      "id": 13,
+      "title": "Baked Chicken",
+      "description": "Tender baked chicken with a crispy coating, served with a side of roasted vegetables.",
+      "price": 1700,
+      "image": "/assets/Dinner/dinner1.png",
+      "type": "Dinner"
     },
     {
-        title: "Chicken Alfredo",
-        description: "Creamy Alfredo sauce with grilled chicken and fettuccine.",
-        price: 14.50,
-        foodType: "Dinner",
-        image: "https://example.com/chicken-alfredo.jpg"
+      "id": 14,
+      "title": "Lemony Salmon Piccata",
+      "description": "A zesty salmon dish with a lemon and caper sauce, served with a side of pasta.",
+      "price": 2700,
+      "image": "/assets/Dinner/dinner2.png",
+      "type": "Dinner"
     },
     {
-        title: "Vegetable Lasagna",
-        description: "Layered pasta with vegetables and cheese.",
-        price: 12.99,
-        foodType: "Dinner",
-        image: "https://example.com/vegetable-lasagna.jpg"
+      "id": 15,
+      "title": "Garlic Butter Baked Salmon",
+      "description": "Salmon baked in a rich garlic butter sauce, served with a side of steamed vegetables.",
+      "price": 2800,
+      "image": "/assets/Dinner/dinner3.png",
+      "type": "Dinner"
     },
     {
-        title: "Fruit Salad",
-        description: "Fresh seasonal fruits with a honey drizzle.",
-        price: 5.99,
-        foodType: "Breakfast",
-        image: "https://example.com/fruit-salad.jpg"
+      "id": 16,
+      "title": "French Fries with Cheese",
+      "description": "Crispy French fries topped with melted cheese, a perfect side dish or snack.",
+      "price": 900,
+      "image": "/assets/Dinner/dinner4.png",
+      "type": "Dinner"
     },
     {
-        title: "Bagel with Cream Cheese",
-        description: "Toasted bagel with a generous spread of cream cheese.",
-        price: 6.50,
-        foodType: "Breakfast",
-        image: "https://example.com/bagel-cream-cheese.jpg"
+      "id": 17,
+      "title": "Pork Tenderloin",
+      "description": "Juicy pork tenderloin, seasoned and roasted to perfection, served with a side of mashed potatoes.",
+      "price": 2500,
+      "image": "/assets/Dinner/dinner5.png",
+      "type": "Dinner"
     },
     {
-        title: "Yogurt Parfait",
-        description: "Layered yogurt with granola and fresh berries.",
-        price: 7.99,
-        foodType: "Breakfast",
-        image: "https://example.com/yogurt-parfait.jpg"
-    },
-    {
-        title: "Chicken Caesar Wrap",
-        description: "Grilled chicken, romaine, and Caesar dressing in a wrap.",
-        price: 9.99,
-        foodType: "Lunch",
-        image: "https://example.com/chicken-caesar-wrap.jpg"
-    },
-    {
-        title: "Vegetarian Pizza",
-        description: "Pizza topped with assorted vegetables and cheese.",
-        price: 11.99,
-        foodType: "Lunch",
-        image: "https://example.com/vegetarian-pizza.jpg"
-    },
-    {
-        title: "Fish and Chips",
-        description: "Crispy fried fish with a side of fries.",
-        price: 12.50,
-        foodType: "Lunch",
-        image: "https://example.com/fish-and-chips.jpg"
-    },
-    {
-        title: "Shrimp Scampi",
-        description: "Shrimp cooked in a garlic butter sauce over pasta.",
-        price: 16.99,
-        foodType: "Dinner",
-        image: "https://example.com/shrimp-scampi.jpg"
-    },
-    {
-        title: "Beef Tacos",
-        description: "Soft tacos filled with seasoned beef and toppings.",
-        price: 10.99,
-        foodType: "Dinner",
-        image: "https://example.com/beef-tacos.jpg"
-    },
-    {
-        title: "Vegetable Curry",
-        description: "Spicy vegetable curry served with rice.",
-        price: 11.99,
-        foodType: "Dinner",
-        image: "https://example.com/vegetable-curry.jpg"
-    },
-    {
-        title: "Chicken Tikka Masala",
-        description: "Grilled chicken in a creamy tomato sauce.",
-        price: 14.99,
-        foodType: "Dinner",
-        image: "https://example.com/chicken-tikka-masala.jpg"
-    },
-    {
-        title: "Mushroom Risotto",
-        description: "Creamy risotto with sautéed mushrooms.",
-        price: 13.50,
-        foodType: "Dinner",
-        image: "https://example.com/mushroom-risotto.jpg"
-    },
-    {
-        title: "Cheesecake",
-        description: "Creamy cheesecake with a graham cracker crust.",
-        price: 6.99,
-        foodType: "Dessert",
-        image: "https://example.com/cheesecake.jpg"
-    },
-    {
-        title: "Chocolate Lava Cake",
-        description: "Warm chocolate cake with a gooey center.",
-        price: 7.50,
-        foodType: "Dessert",
-        image: "https://example.com/chocolate-lava-cake.jpg"
-    },
-    {
-        title: "Tiramisu",
-        description: "Classic Italian dessert with coffee and mascarpone.",
-        price: 8.99,
-        foodType: "Dessert",
-        image: "https://example.com/tiramisu.jpg"
-    },
-    {
-        title: "Apple Pie",
-        description: "Homemade apple pie with a flaky crust.",
-        price: 6.50,
-        foodType: "Dessert",
-        image: "https://example.com/apple-pie.jpg"
+      "id": 18,
+      "title": "Lentil Salad",
+      "description": "A refreshing salad made with lentils, vegetables, and a light vinaigrette dressing.",
+      "price": 1200,
+      "image": "/assets/Dinner/dinner6.png",
+      "type": "Dinner"
     }
-];
+  ];
 
 // Function to insert sample data into Firestore
 const insertSampleData = async () => {
@@ -245,3 +179,42 @@ const insertSampleData = async () => {
 
 // Export the function (optional, if you want to call it from another file)
 export { insertSampleData };
+
+
+
+// paste below code and run npm run dev 
+
+// import React from "react";
+// import { useEffect } from "react";
+// import { Routes, Route } from "react-router-dom";
+// import Index from "./pages/index";
+// import FoodDetailScreen from "./components/FoodShowCase/FoodDetail";
+// import PlaceOrder from "./pages/PlaceOrder";
+// import SignUp from "./pages/SignUp";
+// import Navbar from "./components/common/Navbar";
+// import Footer from "./components/Footer/Footer";
+// import SignIn from "./pages/SignIn";
+// import OrderSuccessful from "./pages/OrderSuccessful";
+// import {insertSampleData} from "./script/insertSampleData";
+
+// function App() {
+//   useEffect(() => {
+//     insertSampleData();
+//   }, []);
+//   return (
+//     <>
+//      <Navbar />
+//       <Routes>
+//         <Route path="/" element={<Index />} />
+//         <Route path="/foods/:title" element={<FoodDetailScreen />} />
+//         <Route path="/place-order" element={<PlaceOrder />} />
+//         <Route path="/order-successful" element={<OrderSuccessful />} />
+//         <Route path="/signup" element={<SignUp />} />
+//         <Route path="/signin" element={<SignIn/>} />
+//       </Routes>
+//       <Footer />
+//     </>
+//   );
+// }
+
+// export default App;

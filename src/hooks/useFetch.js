@@ -1,30 +1,39 @@
 import { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
-import { firestore } from '../config/firebase'; // Import firestore from firebase.js
+import { firestore } from '../config/firebase'; // Ensure this path is correct
 
 const useFetch = () => {
     const [foods, setFoods] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchFoods = async () => {
             try {
-                // Fetch data from Firestore
                 const querySnapshot = await getDocs(collection(firestore, 'foods'));
+
+                if (querySnapshot.empty) {
+                    console.warn("No food data found in Firestore.");
+                }
+
                 const foodItems = querySnapshot.docs.map((doc) => ({
                     _id: doc.id,
                     ...doc.data(),
                 }));
 
-                setFoods(foodItems); // Update state with fetched foods
+                console.log("Fetched foods:", foodItems); // Debugging log
+
+                setFoods(foodItems);
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching foods:', error);
+                setLoading(false);
             }
         };
 
-        fetchFoods(); // Call the fetch function
+        fetchFoods();
     }, []);
 
-    return [foods]; // Return the fetched foods
+    return [foods, loading]; // Return foods and loading state
 };
 
 export default useFetch;

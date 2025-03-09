@@ -9,7 +9,7 @@ import Modal from '../../components/common/Modal';
 import FoodDetail from './FoodDetail'; 
 
 
-const FoodItem = ({ image, title, description, price, foodType }) => {
+const FoodItem = ({ image, title, description, price, type }) => {
     const { handleOrder } = useOrder();
     const { user } = useAuth();
     const [foods] = useFetch();
@@ -57,7 +57,7 @@ const FoodItem = ({ image, title, description, price, foodType }) => {
             <div className="bg-white border border-gray-100 transition transform duration-700 hover:shadow-xl hover:scale-105 p-6 rounded-lg relative">
                 {/* Food Type Badge */}
                 <span className="bg-red-100 border border-red-500 rounded-full text-primary text-sm poppins px-4 py-1 inline-block mb-4">
-                    {foodType}
+                    {type}
                 </span>
 
                 {/* Food Image */}

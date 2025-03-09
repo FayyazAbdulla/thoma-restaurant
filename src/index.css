@@ -96,3 +96,13 @@ body::-webkit-scrollbar {
 .swiper-button-prev::after {
     font-size: 20px; /* Arrow size */
 }
+
+@keyframes realistic-blink {
+  0%, 100% { opacity: 1; }  /* Fully visible */
+  50% { opacity: 0.4; }     /* Slightly faded instead of disappearing completely */
+}
+
+.animate-realistic-blink {
+  animation: realistic-blink 1.5s infinite ease-in-out;
+}
+
