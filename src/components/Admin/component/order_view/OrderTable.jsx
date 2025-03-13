@@ -4,6 +4,9 @@ import OrderDetailsModal from "../common/OrderDetailsModal";
 import SearchBar from "../common/SearchBar";
 import StatusChangeButton from "../common/StatusChangeButton";
 import { Eye } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const OrderTable = ({ orders }) => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
@@ -31,7 +34,7 @@ const OrderTable = ({ orders }) => {
 
   // Search/filter function (only by Order ID)
   const filteredOrders = sortedOrders.filter((order) => {
-    return order.id.toLowerCase().includes(searchTerm.toLowerCase());
+    return order.orderId.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
   // Pagination
@@ -62,35 +65,53 @@ const OrderTable = ({ orders }) => {
     switch (status) {
       case "Pending":
         return (
-            <span className="bg-yellow-500 text-white px-2 py-1 rounded-full text-sm animate-realistic-blink">
+          <motion.span
+            className="bg-yellow-500 text-white px-2 py-1 rounded-full text-sm animate-realistic-blink"
+            whileHover={{ scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
             Pending
-        </span>
-        
+          </motion.span>
         );
       case "Completed":
         return (
-          <span className="bg-green-500 text-white px-2 py-1 rounded-full text-sm">
+          <motion.span
+            className="bg-green-500 text-white px-2 py-1 rounded-full text-sm"
+            whileHover={{ scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
             Completed
-          </span>
+          </motion.span>
         );
       case "Cancelled":
         return (
-          <span className="bg-red-500 text-white px-2 py-1 rounded-full text-sm">
+          <motion.span
+            className="bg-red-500 text-white px-2 py-1 rounded-full text-sm"
+            whileHover={{ scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
             Cancelled
-          </span>
+          </motion.span>
         );
       default:
         return (
-          <span className="bg-gray-500 text-white px-2 py-1 rounded-full text-sm">
+          <motion.span
+            className="bg-gray-500 text-white px-2 py-1 rounded-full text-sm"
+            whileHover={{ scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
             Unknown
-          </span>
+          </motion.span>
         );
     }
   };
 
   const convertToLKR = (price) => {
     const exchangeRate = 300; // Example: 1 USD = 300 LKR
-    return (price * exchangeRate).toFixed(2); // Convert to LKR and round to 2 decimal places
+    return new Intl.NumberFormat("en-LK", {
+      style: "currency",
+      currency: "LKR",
+    }).format(price * exchangeRate);
   };
 
   const handleViewDetails = (order) => {
@@ -98,82 +119,101 @@ const OrderTable = ({ orders }) => {
   };
 
   return (
-    <div className="overflow-x-auto mt-20 mb-20 p-4">
+    <div className="mt-20 mb-20 p-4 ">
       {/* Search Bar */}
       <SearchBar searchTerm={searchTerm} onSearchChange={handleSearchChange} />
 
-      {/* Table */}
-      <table className="min-w-full bg-white border border-red-500">
-        <thead>
-          <tr className="bg-red-500 text-white">
-            <th
-              className="py-2 px-4 border cursor-pointer"
-              onClick={() => handleSort("id")}
-            >
-              Order ID{" "}
-              {sortConfig.key === "id" &&
-                (sortConfig.direction === "asc" ? "↑" : "↓")}
-            </th>
-            <th
-              className="py-2 px-4 border cursor-pointer"
-              onClick={() => handleSort("createdAt")}
-            >
-              Created At{" "}
-              {sortConfig.key === "createdAt" &&
-                (sortConfig.direction === "asc" ? "↑" : "↓")}
-            </th>
-            <th className="py-2 px-4 border">Customer Name</th>
-            <th className="py-2 px-4 border">Country</th>
-            <th className="py-2 px-4 border">Status</th>
-            <th className="py-2 px-4 border">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentOrders.map((order) => {
-            const createdAt = order.createdAt?.toDate
-              ? order.createdAt.toDate().toLocaleString()
-              : "N/A";
+      {/* Table Container with Horizontal Scroll for Mobile */}
+      <div className="overflow-x-auto shadow-md rounded-lg">
+        <table className="min-w-full bg-white">
+          <thead className="bg-red-500 text-white sticky top-0">
+            <tr>
+              <th
+                className="py-3 px-4 text-left cursor-pointer"
+                onClick={() => handleSort("orderId")}
+              >
+                Order ID{" "}
+                {sortConfig.key === "orderId" &&
+                  (sortConfig.direction === "asc" ? "↑" : "↓")}
+              </th>
+              <th
+                className="py-3 px-4 text-left cursor-pointer"
+                onClick={() => handleSort("createdAt")}
+              >
+                Created At{" "}
+                {sortConfig.key === "createdAt" &&
+                  (sortConfig.direction === "asc" ? "↑" : "↓")}
+              </th>
+              <th className="py-3 px-4 text-left">Customer Name</th>
+              <th className="py-3 px-4 text-left">Customer Email</th>
+              <th className="py-3 px-4 text-left">Customer Phone</th>
+              <th className="py-3 px-4 text-left">Status</th>
+              <th className="py-3 px-4 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <AnimatePresence>
+              {currentOrders.map((order, index) => {
+                const createdAt = order.createdAt
+                  ? new Date(order.createdAt).toLocaleString()
+                  : "N/A";
 
-            return (
-              <tr key={order.id} className="hover:bg-red-50">
-                <td className="py-2 px-4 border">{order.id}</td>
-                <td className="py-2 px-4 border">{createdAt}</td>
-                <td className="py-2 px-4 border">
-                  {order.deliveryDetails?.name || "N/A"}
-                </td>
-                <td className="py-2 px-4 border">
-                  {order.deliveryDetails?.country || "N/A"}
-                </td>
-                <td className="py-2 px-4 border">
-                  {getStatusBadge(order.status)}
-                </td>
-                <td className="py-2 px-4 border text-center">
-                  <div className="flex items-center justify-center gap-3">
-                    {/* View Details Button */}
-                    <button
-                      onClick={() => handleViewDetails(order)}
-                      className="p-2 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600 hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-110"
-                      title="View Details"
-                    >
-                      <Eye className="w-5 h-5" />
-                    </button>
+                return (
+                  <motion.tr
+                    key={order.orderId}
+                    className={`${
+                      index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                    } hover:bg-red-100 transition-colors`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <td className="py-3 px-4 border-b">{order.orderId}</td>
+                    <td className="py-3 px-4 border-b">{createdAt}</td>
+                    <td className="py-3 px-4 border-b">
+                      {order.customerDetails?.name || "N/A"}
+                    </td>
+                    <td className="py-3 px-4 border-b">
+                      {order.customerDetails?.email || "N/A"}
+                    </td>
+                    <td className="py-3 px-4 border-b">
+                      {order.customerDetails?.phone || "N/A"}
+                    </td>
+                    <td className="py-3 px-4 border-b">
+                      {getStatusBadge(order.status)}
+                    </td>
+                    <td className="py-3 px-4 border-b">
+                      <div className="flex items-center gap-3">
+                        {/* View Details Button */}
+                        <motion.button
+                          onClick={() => handleViewDetails(order)}
+                          className="p-2 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600 hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-110"
+                          title="View Details"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                        >
+                          <Eye className="w-5 h-5" />
+                        </motion.button>
 
-                    {/* Status Change Button */}
-                    <StatusChangeButton
-                      orderId={order.id}
-                      onStatusChange={() => {
-                        // Refresh the orders list after status change
-                        setCurrentPage(1);
-                        setSearchTerm("");
-                      }}
-                    />
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                        {/* Status Change Button */}
+                        <StatusChangeButton
+                          orderId={order.orderId}
+                          onStatusChange={() => {
+                            // Refresh the orders list after status change
+                            setCurrentPage(1);
+                            setSearchTerm("");
+                          }}
+                        />
+                      </div>
+                    </td>
+                  </motion.tr>
+                );
+              })}
+            </AnimatePresence>
+          </tbody>
+        </table>
+      </div>
 
       {/* Pagination */}
       <Pagination
@@ -183,13 +223,17 @@ const OrderTable = ({ orders }) => {
       />
 
       {/* Order Details Modal */}
-      {selectedOrder && (
-        <OrderDetailsModal
-          order={selectedOrder}
-          onClose={() => setSelectedOrder(null)}
-          convertToLKR={convertToLKR}
-        />
-      )}
+      <AnimatePresence>
+        {selectedOrder && (
+          <OrderDetailsModal
+            order={selectedOrder}
+            onClose={() => setSelectedOrder(null)}
+            convertToLKR={convertToLKR}
+          />
+        )}
+      </AnimatePresence>
+
+      <ToastContainer />
     </div>
   );
 };
