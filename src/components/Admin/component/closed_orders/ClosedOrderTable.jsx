@@ -8,7 +8,7 @@ const ClosedOrderTable = ({ closedOrders }) => {
 
   // Function to convert price to LKR
   const convertToLKR = (price) => {
-    const exchangeRate = 300; // Example: 1 USD = 300 LKR
+    const exchangeRate = 1; // Example: 1 USD = 300 LKR
     return new Intl.NumberFormat("en-LK", {
       style: "currency",
       currency: "LKR",

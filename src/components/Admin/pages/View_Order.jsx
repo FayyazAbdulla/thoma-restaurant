@@ -6,6 +6,8 @@ import ClosedOrderList from "../component/closed_orders/ClosedOrderList";
 import OrderList from "../component/order_view/OrderList";
 import OverviewSection from "../component/OverviewSection/OverviewSection"; // Import the OverviewSection component
 import CustomerInsightsSection from "../component/CustomerInsightsSection/CustomerInsightsSection"; // Import the CustomerInsightsSection component
+import ProductSalesInsights from "../component/ProductSalesInsights";
+import DataDownloadPanel from "../component/Download/DataDownloadPanel";
 
 function View_Order() {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -94,6 +96,8 @@ function View_Order() {
         {renderToggleButton("Closed")}
         {renderToggleButton("Overview")}
         {renderToggleButton("Customer Insights")}
+        {renderToggleButton("Product Sales Insights")}
+        {renderToggleButton("Download Data")}
       </div>
 
       {/* Display Component Based on View */}
@@ -104,8 +108,12 @@ function View_Order() {
           <ClosedOrderList />
         ) : view === "Overview" ? (
           <OverviewSection orders={orders} />
-        ) : (
+        ) : view === "Customer Insights" ? (
           <CustomerInsightsSection orders={orders} />
+        )  : view === "Product Sales Insights" ? (
+          <ProductSalesInsights orders={orders} />
+        ) : (
+         <DataDownloadPanel />
         )}
       </div>
     </div>

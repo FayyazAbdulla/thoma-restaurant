@@ -1,14 +1,14 @@
 import React from "react";
 
-const OrderDetailsModal = ({ order = {}, onClose, convertToLKR }) => {
+const OrderDetailsModal = ({ order = {}, onClose }) => {
   // Ensure order exists and prevent errors
   const orderId = order.orderId || "N/A";
   const createdAt = order.createdAt
     ? new Date(order.createdAt).toLocaleDateString()
     : "N/A";
 
-  // Calculate the total price in LKR
-  const totalPriceLKR = convertToLKR(order.totalAmount || 0);
+  // Format the total price with commas
+  const totalPriceFormatted = (order.totalAmount || 0).toLocaleString();
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -44,8 +44,7 @@ const OrderDetailsModal = ({ order = {}, onClose, convertToLKR }) => {
             </p>
             <p>
               <span className="font-semibold">Address:</span>{" "}
-              {order.customerDetails?.flatno || "N/A"}, 
-              {order.customerDetails?.roadNo || "N/A"}
+              {order.customerDetails?.flatno ? `${order.customerDetails.flatno}, ${order.customerDetails.roadNo}` : "N/A"}
             </p>
           </div>
         </div>
@@ -66,17 +65,20 @@ const OrderDetailsModal = ({ order = {}, onClose, convertToLKR }) => {
               </thead>
               <tbody>
                 {(order.items || []).length > 0 ? (
-                  order.items.map((item, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
-                      <td className="py-2 px-4 border">{item.title || "N/A"}</td>
-                      <td className="py-2 px-4 border">{item.description || "N/A"}</td>
-                      <td className="py-2 px-4 border">{item.quantity || 0}</td>
-                      <td className="py-2 px-4 border">{convertToLKR(item.price) || "0.00"}</td>
-                      <td className="py-2 px-4 border">
-                        {convertToLKR(item.price * item.quantity) || "0.00"}
-                      </td>
-                    </tr>
-                  ))
+                  order.items.map((item, index) => {
+                    const itemPriceFormatted = (item.price || 0).toLocaleString();
+                    const itemTotalPriceFormatted = (item.price * item.quantity || 0).toLocaleString();
+
+                    return (
+                      <tr key={index} className="hover:bg-gray-50">
+                        <td className="py-2 px-4 border">{item.title || "N/A"}</td>
+                        <td className="py-2 px-4 border">{item.description || "N/A"}</td>
+                        <td className="py-2 px-4 border">{item.quantity || 0}</td>
+                        <td className="py-2 px-4 border">{itemPriceFormatted}</td>
+                        <td className="py-2 px-4 border">{itemTotalPriceFormatted}</td>
+                      </tr>
+                    );
+                  })
                 ) : (
                   <tr>
                     <td colSpan="5" className="py-4 text-center text-gray-500">
@@ -92,7 +94,7 @@ const OrderDetailsModal = ({ order = {}, onClose, convertToLKR }) => {
         {/* Total Price */}
         <div className="flex justify-between items-center mb-6">
           <p className="text-2xl font-semibold text-red-600">Total Price:</p>
-          <p className="text-2xl font-bold text-red-600">{totalPriceLKR}</p>
+          <p className="text-2xl font-bold text-red-600">{totalPriceFormatted}</p>
         </div>
 
         {/* Close Button */}
