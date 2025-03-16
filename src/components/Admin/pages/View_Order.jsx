@@ -67,7 +67,7 @@ function View_Order() {
     return (
       <button
         onClick={() => handleViewChange(label)}
-        className={`px-4 py-2 rounded-full transition-colors font-semibold text-sm md:text-base ${
+        className={`px-4 py-2 rounded-full transition-colors font-semibold text-sm md:text-base whitespace-nowrap ${
           isActive
             ? "bg-red-500 text-white"
             : "bg-gray-200 text-gray-700 hover:bg-gray-300"
@@ -89,9 +89,9 @@ function View_Order() {
   }
 
   return (
-    <div className="p-4 md:p-20 mt-10">
+    <div className="p-4 md:p-8 lg:p-20 mt-20">
       {/* Toggle Buttons */}
-      <div className="flex space-x-4 mb-8 justify-center md:justify-start">
+      <div className="flex overflow-x-auto space-x-4 mb-8 pb-2 md:justify-start">
         {renderToggleButton("Pending")}
         {renderToggleButton("Closed")}
         {renderToggleButton("Overview")}
@@ -110,10 +110,10 @@ function View_Order() {
           <OverviewSection orders={orders} />
         ) : view === "Customer Insights" ? (
           <CustomerInsightsSection orders={orders} />
-        )  : view === "Product Sales Insights" ? (
+        ) : view === "Product Sales Insights" ? (
           <ProductSalesInsights orders={orders} />
         ) : (
-         <DataDownloadPanel />
+          <DataDownloadPanel />
         )}
       </div>
     </div>
